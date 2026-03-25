@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVA TERMINAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- pdf.js for file extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">NOVA</h1>
+            </div>
+            
+            <button id="new-chat-btn" class="glow-btn">
+                <span>+</span> New Sequence
+            </button>
+            
+            <div class="history-container">
+                <h3>Access Logs</h3>
+                <ul id="history-list"></ul>
+            </div>
+            
+            <div class="fine-tune-panel">
+                <a href="https://platform.openai.com/docs/guides/fine-tuning" target="_blank" class="fine-tune-link">
+                    ℹ️ How to Fine-Tune
+                </a>
+            </div>
+
+            <div class="spacer"></div>
+            
+            <div class="model-selector-container">
+                <div class="model-select-header" id="model-select-header">
+                    <div class="selected-model-info">
+                        <span class="provider-badge" id="selected-provider-badge">🔵</span>
+                        <span class="model-name" id="selected-model-name">gpt-4o-mini</span>
+                        <span class="model-caps" id="selected-model-caps">👁</span>
+                    </div>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <!-- Custom Dropdown Options -->
+                <div class="model-options" id="model-options">
+                    <!-- Options populated by JS -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-workspace">
+            <div id="chat-stream" class="chat-container">
+                <div class="welcome-message">System Initialized. Awaiting Input...</div>
+            </div>
+            
+            <div class="input-area">
+                <div id="attachment-preview" class="attachment-preview hidden">
+                    <!-- Image/File previews go here -->
+                </div>
+                <form id="chat-form">
+                    <div class="input-wrapper">
+                        <button type="button" id="vision-btn" class="input-tool-btn" title="Attach Image">📎</button>
+                        <input type="file" id="image-upload" accept="image/png, image/jpeg, image/webp, image/gif" hidden>
+                        
+                        <button type="button" id="file-btn" class="input-tool-btn" title="Attach Document (PDF, TXT, CSV)">📄</button>
+                        <input type="file" id="file-upload" accept=".pdf,.txt,.csv,.docx" hidden>
+
+                        <button type="button" id="stt-btn" class="input-tool-btn" title="Speech to Text">🎤</button>
+                        <button type="button" id="image-gen-toggle" class="input-tool-btn toggle-btn" title="Image Generation Mode">🎨</button>
+
+                        <textarea id="prompt-input" rows="1" placeholder="Enter command sequence..." tabindex="0"></textarea>
+                        
+                        <div id="stt-waveform" class="hidden">
+                            <span></span><span></span><span></span>
+                        </div>
+
+                        <button type="submit" id="send-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                        <button type="button" id="stop-btn" class="hidden" title="Stop generating">⬛</button>
+                    </div>
+                </form>
+                <div class="input-details">
+                    <span id="char-counter">0 chars</span>
+                    <span id="stt-status" class="stt-status idle">Mic ready</span>
+                    <span>Shift+Enter for newline</span>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="scanlines"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
